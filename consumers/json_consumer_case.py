@@ -97,13 +97,12 @@ def update_chart():
     counts_list = list(author_counts.values())
 
     # Create a bar chart using the bar() method.
-    # Pass in the x list, the y list, and the color
     ax.bar(authors_list, counts_list, color="skyblue")
 
     # Use the built-in axes methods to set the labels and title
     ax.set_xlabel("Authors")
     ax.set_ylabel("Message Counts")
-    ax.set_title("Real-Time Author Message Counts")
+    ax.set_title("Real-Time Author Message Counts - by Elen")  # Updated title
 
     # Use the set_xticklabels() method to rotate the x-axis labels
     # Pass in the x list, specify the rotation angle is 45 degrees,

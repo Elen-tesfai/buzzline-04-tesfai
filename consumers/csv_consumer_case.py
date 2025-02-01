@@ -5,7 +5,6 @@ Consume json messages from a Kafka topic and visualize author counts in real-tim
 
 Example Kafka message format:
 {"timestamp": "2025-01-11T18:15:00Z", "temperature": 225.0}
-
 """
 
 #####################################
@@ -153,7 +152,7 @@ def update_chart(rolling_window, window_size):
     # Use the built-in axes methods to set the labels and title
     ax.set_xlabel("Time")
     ax.set_ylabel("Temperature (°F)")
-    ax.set_title("Smart Smoker: Temperature vs. Time")
+    ax.set_title("Smart Smoker: Temperature vs. Time - by Elen")  # Updated title with "by Elen"
 
     # Highlight stall points if conditions are met such that
     #    The rolling window is full and a stall is detected
