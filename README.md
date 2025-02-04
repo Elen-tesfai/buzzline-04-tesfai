@@ -17,10 +17,11 @@ The chart dynamically updates as new data arrives and the consumer processes it.
 
 ### **2. Producer & Consumer Setup**
 
-The producer used in this project is based on the **CSV streaming application**. It sends messages from a CSV file to a Kafka topic.
+The producer used in this project streams **JSON data** to a Kafka topic and a file.
 
-- **Producer**: I utilized `project_producer_case.py`, which sends data from a CSV file to a Kafka topic.
-- **Consumer**: The consumer, `project_consumer_tesfai.py`, consumes the data from the Kafka topic and visualizes it in real-time.
+- **Producer**: I utilized `project_producer_case.py`, which streams **JSON data** from the `project_live.json` file to a Kafka topic. Each JSON message contains attributes like `message`, `author`, `timestamp`, `category`, `sentiment`, `keyword_mentioned`, and `message_length`.
+  
+- **Consumer**: The consumer, `project_consumer_tesfai.py`, consumes the data from the Kafka topic and visualizes it in real-time, updating a dynamic chart based on the insights drawn from the JSON messages.
 
 ### **3. Running the Producer & Consumer**
 
@@ -33,9 +34,10 @@ echo "Activating virtual environment..."
 
 For Windows:
 ```shell
-venv\Scripts\activate
-
+.venv\Scripts\activate
+```
 For Mac/Linux:
+```zsh
 source .venv/bin/activate
 ```
 # Step 2: Start the Producer
@@ -44,18 +46,22 @@ echo "Starting the producer..."
 For Windows:
 ```shell
 py -m producers.project_producer_case
+```
 
 For Mac/Linux:
-python3 -m producers.project_producer_case &
+```zsh
+python3 -m producers.project_producer_case 
 ```
 # Step 3: Start the Consumer
 echo "Starting the consumer..."
 
 For Windows:
+
 ```shell
 py -m consumers.project_consumer_tesfai
-
-# For Mac/Linux:
+```
+For Mac/Linux:
+```zsh
 python3 -m consumers.project_consumer_tesfai
 ```
 ### **4. Enhancements**
@@ -65,8 +71,8 @@ In addition to the basic visualization, I implemented the following enhancements
 #### **Real-Time Chart Updates**  
 The chart updates dynamically as new data is consumed from Kafka. This provides a live view of the data stream and allows us to visualize trends and changes as they happen.
 
-#### **CSV File Processing**  
-The producer now reads data from a CSV file and stops after processing all rows. Unlike the continuous streaming examples, this modification ensures that the producer only sends a finite set of data to Kafka, completing the process after all records are processed.
+#### **JSON Data Processing**  
+The producer reads JSON data from a file (project_live.json) and streams it to a Kafka topic. Unlike continuous data streaming, this setup ensures that each message is processed in real-time as it’s received. The producer sends a stream of JSON messages, each containing attributes like message, author, timestamp, category, sentiment, etc. The producer continues sending data to Kafka, and the consumer processes each message dynamically to visualize insights.
 
 We can analyze and visualize different types of streaming data as the information arrives.
 
