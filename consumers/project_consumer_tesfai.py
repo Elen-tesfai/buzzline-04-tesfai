@@ -1,8 +1,8 @@
-# project_consumer_tesfai.py
-
 import json
 import os
 import matplotlib.pyplot as plt
+import matplotlib.patheffects as path_effects
+import mplcursors
 from collections import defaultdict
 from time import sleep
 
@@ -11,7 +11,7 @@ category_sentiment = defaultdict(lambda: {'total_sentiment': 0, 'message_count':
 processed_messages = set()  # Store processed message timestamps to avoid re-processing
 
 # Set up live visuals
-fig, ax = plt.subplots()
+fig, ax = plt.subplots(figsize=(6.4, 4.8))  # Original figsize applied
 plt.ion()  # Interactive mode
 
 def update_chart():
@@ -23,8 +23,17 @@ def update_chart():
     categories = list(category_sentiment.keys())
     average_sentiments = [data['total_sentiment'] / data['message_count'] for data in category_sentiment.values()]
 
-    # Create the bar chart
-    ax.bar(categories, average_sentiments, color="skyblue")
+    # Create the bar chart with shadow and gradient color based on sentiment
+    bars = ax.bar(categories, average_sentiments, color=plt.cm.viridis(average_sentiments))  # Gradient color
+    
+    # Adding shadow to bars (increased prominence)
+    for bar in bars:
+        bar.set_path_effects([path_effects.withStroke(linewidth=3, foreground='gray')])
+
+    # Add data labels to the bars
+    for bar in bars:
+        height = bar.get_height()
+        ax.text(bar.get_x() + bar.get_width() / 2, height + 0.01, f'{height:.2f}', ha='center', va='bottom', fontsize=10)
 
     # Set labels and title
     ax.set_xlabel("Categories")
@@ -36,6 +45,11 @@ def update_chart():
 
     # Adjust layout
     plt.tight_layout()
+
+    # Add interactive hover tooltips
+    mplcursors.cursor(bars, hover=True).connect(
+        "add", lambda sel: sel.annotation.set_text(f'{categories[sel.index]}\nSentiment: {average_sentiments[sel.index]:.2f}')
+    )
 
     # Draw the chart
     plt.draw()
