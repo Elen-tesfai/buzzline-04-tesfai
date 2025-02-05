@@ -1,6 +1,6 @@
 # project_consumer_tesfai.py
 
-import json 
+import json
 import os
 import matplotlib.pyplot as plt
 import matplotlib.patheffects as path_effects
@@ -120,4 +120,4 @@ def main():
         plt.show()  # Show the final chart
 
 if __name__ == "__main__":
-    main()
+    main()             
